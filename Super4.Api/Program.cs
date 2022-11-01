@@ -17,17 +17,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
-
-builder.Services.AddAutoMapper(typeof(Core));
-
-
 var builder2 = WebApplication.CreateBuilder(args);
 string connString = builder2.Configuration.GetConnectionString("default");
 builder.Services.AddScoped<IDbConnector>(db => new SqlConnector(connString));
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddAutoMapper(typeof(Core));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICustomerApplication, CustomerApplication>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();

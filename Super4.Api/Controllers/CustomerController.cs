@@ -17,16 +17,25 @@ namespace Super4.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var response = await _customerApplication.GetAllAsync();
+            return Ok(response);
         }
 
-
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var response = await _customerApplication.GetByIdAsync(id);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return UnprocessableEntity(ex.Message);
+            }
+
         }
 
 

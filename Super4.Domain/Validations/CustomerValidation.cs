@@ -17,7 +17,7 @@ namespace Super4.Domain.Validations
 
             RuleFor(x => x.Document.Replace("-", "").Replace(".", "")).NotEmpty().NotNull().WithMessage("Document can't be null or empty.");
             RuleFor(x => x.Document.Replace("-", "").Replace(".", "")).Length(11,11).WithMessage("Document must have 11 characters only.");
-
+            
             RuleFor(x => x.CEP.Replace("-", "").Replace(".", "")).NotNull().NotEmpty().WithMessage("CEP can't be null or empty.");
             RuleFor(x => x.CEP.Replace("-", "").Replace(".", "")).Length(8, 8).WithMessage("CEP must have 8 characters only.");
 

@@ -24,14 +24,18 @@ namespace Super4.Application.Application
             return await _customerService.CreateAsync(customerModel);
         }
 
-        public Task<List<CustomerResponse>> GetAllAsync()
+        public async Task<List<CustomerResponse>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Customer> result = await _customerService.GetAllAsync();
+            var response = _mapper.Map<List<CustomerResponse>>(result);
+            return response;
         }
 
-        public Task<CustomerResponse> GetByIdAsync(int customerId)
-        { 
-            throw new NotImplementedException();
+        public async Task<CustomerResponse> GetByIdAsync(int customerId)
+        {
+            var result = await _customerService.GetByIdAsync(customerId);
+            var response = _mapper.Map<CustomerResponse>(result);
+            return response;
         }
     }
 }

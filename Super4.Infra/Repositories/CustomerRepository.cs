@@ -2,6 +2,7 @@
 using Super4.Domain.Interfaces.Repositories;
 using Super4.Domain.Interfaces.Repositories.DataConnector;
 using Super4.Domain.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace Super4.Infra.Repositories
 {
@@ -12,8 +13,6 @@ namespace Super4.Infra.Repositories
         {
             _dbConnector = dbConnector;
         }
-
-        
 
         public async Task CreateAsync(Customer customer)
         {
@@ -34,23 +33,28 @@ namespace Super4.Infra.Repositories
                 CEP = customer.CEP.Replace("-", "").Replace(".", "")
             }, _dbConnector.dbTransaction);
         }
-
-
-        public Task<bool> ExistsById(int customerId)
+        public async Task<List<Customer>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
+            string sql = @"select * from customer";
 
-        public Task<List<Customer>> GetAllAsync()
+            var customers = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, _dbConnector.dbTransaction);
+            return customers.ToList();
+        }
+        public async Task<Customer> GetByIdAsync(int customerId)
         {
-            throw new NotImplementedException();
-        }
+            string sql = @"select * from customer where Id = @Id";
 
-        public Task<Customer> GetByIdAsync(int customerId)
+            var customer = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, new { Id = customerId }, _dbConnector.dbTransaction);
+            return customer.First();
+
+        }
+        public async Task<bool> ExistsById(int customerId)
         {
-            throw new NotImplementedException();
-        }
+            string sql = @"select 1 from customer where Id = @Id";
 
+            var customer = await _dbConnector.dbConnection.QueryAsync<bool>(sql, new { Id = customerId }, _dbConnector.dbTransaction);
+            return customer.FirstOrDefault();
+        }
         public async Task<bool> CPFExists(string cpf)
         {
             string sql = @"select 1 from customer
@@ -61,6 +65,4 @@ namespace Super4.Infra.Repositories
             return customerCPF.FirstOrDefault();
         }
     }
-
-
 }
