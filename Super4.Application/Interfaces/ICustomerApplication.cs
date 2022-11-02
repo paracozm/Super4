@@ -8,6 +8,6 @@ namespace Super4.Application.Interfaces
     {
         Task<Customer> CreateAsync(CreateCustomerRequest customer);
         Task<List<CustomerResponse>> GetAllAsync();
-        Task<CustomerResponse> GetByIdAsync(int customerId);
+        Task<CustomerResponse> GetByIdAsync(int id);
     }
 }

@@ -7,6 +7,7 @@ namespace Super4.Infra.Repositories
     {
         private ICustomerRepository _customerRepository;
         private IProductRepository _productRepository;
+        private IStockRepository _stockRepository;
         public UnitOfWork(IDbConnector dbConnector)
         {
             this.dbConnector = dbConnector;
@@ -18,7 +19,7 @@ namespace Super4.Infra.Repositories
 
         public IProductRepository ProductRepository => _productRepository ?? (_productRepository = new ProductRepository(dbConnector));
 
-        public IStockRepository StockRepository => throw new NotImplementedException();
+        public IStockRepository StockRepository => _stockRepository ?? (_stockRepository = new StockRepository(dbConnector));
 
         public IDbConnector dbConnector { get; }
 

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Super4.Application.DataContract.Request.Customer;
 using Super4.Application.DataContract.Request.Product;
+using Super4.Application.DataContract.Request.Stock;
 using Super4.Application.DataContract.Response.Customer;
 using Super4.Application.DataContract.Response.Product;
+using Super4.Application.DataContract.Response.Stock;
 using Super4.Domain.Model;
 
 namespace Super4.Application.Mapper
@@ -13,6 +15,7 @@ namespace Super4.Application.Mapper
         {
             CustomerMap();
             ProductMap();
+            StockMap();
         }
 
         private void CustomerMap()
@@ -25,6 +28,16 @@ namespace Super4.Application.Mapper
             CreateMap<CreateProductRequest, Product>();
             CreateMap<Product, ProductResponse>();
             CreateMap<UpdateProductRequest, Product>();
+        }
+        private void StockMap()
+        {
+            CreateMap<CreateStockRequest, Stock>()
+                .ForPath(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId));
+            CreateMap<Stock, StockResponse>()
+                .ForPath(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName));
+            CreateMap<UpdateStockRequest, Stock>()
+                .ForPath(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId));
+
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Super4.Application.DataContract.Request.Product;
-using Super4.Application.DataContract.Response.Customer;
 using Super4.Application.DataContract.Response.Product;
 using Super4.Application.Interfaces;
 using Super4.Domain.Interfaces.Services;
 using Super4.Domain.Model;
-using Super4.Domain.Services;
 
 namespace Super4.Application.Application
 {

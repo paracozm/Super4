@@ -31,9 +31,9 @@ namespace Super4.Application.Application
             return response;
         }
 
-        public async Task<CustomerResponse> GetByIdAsync(int customerId)
+        public async Task<CustomerResponse> GetByIdAsync(int id)
         {
-            var result = await _customerService.GetByIdAsync(customerId);
+            var result = await _customerService.GetByIdAsync(id);
             var response = _mapper.Map<CustomerResponse>(result);
             return response;
         }

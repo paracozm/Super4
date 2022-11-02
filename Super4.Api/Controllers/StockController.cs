@@ -1,29 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Super4.Application.Application;
 using Super4.Application.DataContract.Request.Product;
+using Super4.Application.DataContract.Request.Stock;
 using Super4.Application.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Super4.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class StockController : ControllerBase
     {
-        private readonly IProductApplication _productApplication;
+        private readonly IStockApplication _stockApplication;
 
-        public ProductController(IProductApplication productApplication)
+        public StockController(IStockApplication stockApplication)
         {
-            _productApplication = productApplication;
+            _stockApplication = stockApplication;
         }
+
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var response = await _productApplication.GetAllAsync();
+            var response = await _stockApplication.GetAllAsync();
             return Ok(new
             {
-                Message = "All products returned.",
+                Message = "All stock returned.",
                 response
 
             });
@@ -35,10 +37,10 @@ namespace Super4.Api.Controllers
         {
             try
             {
-                var response = await _productApplication.GetByIdAsync(id);
+                var response = await _stockApplication.GetByIdAsync(id);
                 return Ok(new
                 {
-                    Message = "Product returned.",
+                    Message = "Stock returned.",
                     response
 
                 });
@@ -49,15 +51,16 @@ namespace Super4.Api.Controllers
             }
         }
 
+
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateProductRequest request)
+        public async Task<ActionResult> Post([FromBody] CreateStockRequest request)
         {
             try
             {
-                await _productApplication.CreateAsync(request);
+                await _stockApplication.CreateAsync(request);
                 return Ok(new
                 {
-                    Message = "Product created.",
+                    Message = "Stock created.",
                     request
 
                 });
@@ -67,16 +70,17 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
+
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(string id, UpdateProductRequest request)
+        public async Task<ActionResult> Put(string id, UpdateStockRequest request)
         {
             try
             {
-                await _productApplication.UpdateAsync(id, request);
+                await _stockApplication.UpdateAsync(id, request);
                 return Ok(new
                 {
-                    Message = "Product updated.",
+                    Message = "Stock updated.",
                     request
 
                 });
@@ -86,7 +90,5 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
-        
     }
 }

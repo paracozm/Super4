@@ -20,7 +20,12 @@ namespace Super4.Api.Controllers
         public async Task<ActionResult> GetAll()
         {
             var response = await _customerApplication.GetAllAsync();
-            return Ok(response);
+            return Ok(new
+            {
+                Message = "All customers returned.",
+                response
+
+            });
         }
 
         [HttpGet("{id}")]
@@ -29,7 +34,12 @@ namespace Super4.Api.Controllers
             try
             {
                 var response = await _customerApplication.GetByIdAsync(id);
-                return Ok(response);
+                return Ok(new
+                {
+                    Message = "Customer returned.",
+                    response
+
+                });
             }
             catch (Exception ex)
             {

@@ -2,7 +2,6 @@
 using Super4.Domain.Interfaces.Repositories;
 using Super4.Domain.Interfaces.Repositories.DataConnector;
 using Super4.Domain.Model;
-using System.ComponentModel.DataAnnotations;
 
 namespace Super4.Infra.Repositories
 {

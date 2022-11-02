@@ -51,7 +51,7 @@ namespace Super4.Domain.Services
             var exists = await _unitOfWork.ProductRepository.ExistsById(product.Id);
             if (!exists)
             {
-                throw new Exception($"Error: SKU Id {product.Id} does not exist.");
+                throw new Exception($"Error: Product Id {product.Id} does not exist.");
             }
 
             await _unitOfWork.ProductRepository.UpdateAsync(product);
