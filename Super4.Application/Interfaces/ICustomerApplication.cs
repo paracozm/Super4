@@ -4,7 +4,7 @@ using Super4.Domain.Model;
 
 namespace Super4.Application.Interfaces
 {
-    public   interface ICustomerApplication
+    public interface ICustomerApplication
     {
         Task<Customer> CreateAsync(CreateCustomerRequest customer);
         Task<List<CustomerResponse>> GetAllAsync();

@@ -53,7 +53,7 @@ namespace Super4.Infra.Repositories
             string sql = @"select 1 from customer where Id = @Id";
 
             var customer = await _dbConnector.dbConnection.QueryAsync<bool>(sql, new { Id = customerId }, _dbConnector.dbTransaction);
-            return customer.FirstOrDefault();
+            return customer.First();
         }
         public async Task<bool> CPFExists(string cpf)
         {

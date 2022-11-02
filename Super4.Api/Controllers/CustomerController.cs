@@ -42,18 +42,15 @@ namespace Super4.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateCustomerRequest request)
         {
-            /*var response = await _customerApplication.CreateAsync(request);
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(response);
-            }
-            return Ok(response);*/
-
             try
             {
                 await _customerApplication.CreateAsync(request);
-                return Ok(request);
+                return Ok(new
+                {
+                    Message = "Customer created.",
+                    request
+
+                });
             }
             catch(Exception ex)
             {
@@ -63,3 +60,12 @@ namespace Super4.Api.Controllers
 
     }
 }
+
+
+/*var response = await _customerApplication.CreateAsync(request);
+
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(response);
+            }
+            return Ok(response);*/

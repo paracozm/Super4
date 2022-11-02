@@ -6,7 +6,7 @@ namespace Super4.Infra.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private ICustomerRepository _customerRepository;
-
+        private IProductRepository _productRepository;
         public UnitOfWork(IDbConnector dbConnector)
         {
             this.dbConnector = dbConnector;
@@ -16,7 +16,7 @@ namespace Super4.Infra.Repositories
 
         public IOrderRepository OrderRepository => throw new NotImplementedException();
 
-        public IProductRepository ProductRepository => throw new NotImplementedException();
+        public IProductRepository ProductRepository => _productRepository ?? (_productRepository = new ProductRepository(dbConnector));
 
         public IStockRepository StockRepository => throw new NotImplementedException();
 
