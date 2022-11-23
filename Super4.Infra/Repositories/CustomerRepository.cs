@@ -63,5 +63,6 @@ namespace Super4.Infra.Repositories
 
             return customerCPF.FirstOrDefault();
         }
+        
     }
 }

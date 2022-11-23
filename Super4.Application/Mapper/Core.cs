@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Super4.Application.DataContract.Request.Customer;
+using Super4.Application.DataContract.Request.Order;
 using Super4.Application.DataContract.Request.Product;
 using Super4.Application.DataContract.Request.Stock;
 using Super4.Application.DataContract.Response.Customer;
+using Super4.Application.DataContract.Response.Order;
 using Super4.Application.DataContract.Response.Product;
 using Super4.Application.DataContract.Response.Stock;
 using Super4.Domain.Model;
@@ -16,6 +18,7 @@ namespace Super4.Application.Mapper
             CustomerMap();
             ProductMap();
             StockMap();
+            OrderMap();
         }
 
         private void CustomerMap()
@@ -38,6 +41,21 @@ namespace Super4.Application.Mapper
             CreateMap<UpdateStockRequest, Stock>()
                 .ForPath(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId));
 
+        }
+        private void OrderMap()
+        {
+            CreateMap<CreateOrderRequest, Order>()
+                .ForPath(dest => dest.Customer.Id, opt => opt.MapFrom(src => src.CustomerId));
+            CreateMap<CreateOrderItemRequest, OrderItem>()
+                .ForPath(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId));
+
+
+            CreateMap<Order, OrderResponse>()
+                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+                //.ForPath(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
+            
+            
+            CreateMap<OrderItem, OrderItemResponse>();
         }
     }
 }

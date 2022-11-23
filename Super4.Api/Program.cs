@@ -39,6 +39,10 @@ builder.Services.AddScoped<IStockApplication, StockApplication>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 
+builder.Services.AddScoped<IOrderApplication, OrderApplication>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 var app = builder.Build();
 
 
