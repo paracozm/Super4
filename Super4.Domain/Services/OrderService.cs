@@ -31,21 +31,13 @@ namespace Super4.Domain.Services
                         throw new ArgumentException("Property: " + error.PropertyName + " failed validation. Error was: " + error.ErrorMessage);
                     }
                     return new Order();
-                }*/
-
-
-
-                /*
-                
+                }
 
                 var stockqty = order.Stock.Quantity;
                 var itemAmount = order.Item.TotalAmount;
                 order.Stock.Quantity = (stockqty - itemAmount);
                 */
-                var productPrice = order.Item.ProductPrice;
-                var totalAmount = order.Item.TotalAmount;
 
-                order.TotalPrice = (productPrice * totalAmount);
 
                 order.OrderNumber = Guid.NewGuid().ToString("N");
                 order.Id = Guid.NewGuid().ToString("N");

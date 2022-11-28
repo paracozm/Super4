@@ -14,16 +14,6 @@ namespace Super4.Infra.Repositories
         }
         public async Task CreateAsync(Order order)
         {
-            if (order.Items.Any())
-            {
-                foreach (var item in order.Items)
-                {
-                    item.Order = order;
-                    await CreateItemAsync(item);
-                }
-            }
-
-
             string sql = $@"INSERT INTO [order] (Id, CustomerId, OrderNumber, OrderDate, TotalPrice) 
                                 values (@Id, @CustomerId, @OrderNumber, @OrderDate, @TotalPrice)";
 
@@ -33,10 +23,25 @@ namespace Super4.Infra.Repositories
                 CustomerId = order.Customer.Id,
                 OrderNumber = order.OrderNumber,
                 OrderDate = order.OrderDate,
-                TotalPrice = order.TotalPrice
+                TotalPrice = order.TotalPrice,
+                //quantity = order.Stock.Quantity
             }, _dbConnector.dbTransaction);
 
-            
+            if (order.Items.Any())
+            {
+                foreach (var item in order.Items)
+                {
+                    item.Order = order;
+                    order.TotalPrice += item.ProductPrice * item.TotalAmount;
+
+
+                    ////TOTAL AMOUNT NOT SUMMING
+                    /// ====>  order.Stock.Quantity = order.Stock.Quantity - item.TotalAmount;
+                    /// 
+
+                    await CreateItemAsync(item);
+                }
+            }
         }
 
         public async Task CreateItemAsync(OrderItem item)
