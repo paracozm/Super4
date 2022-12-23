@@ -24,7 +24,6 @@ namespace Super4.Infra.Repositories
                 OrderNumber = order.OrderNumber,
                 OrderDate = order.OrderDate,
                 TotalPrice = order.TotalPrice,
-                //quantity = order.Stock.Quantity
             }, _dbConnector.dbTransaction);
 
             if (order.Items.Any())
@@ -32,17 +31,14 @@ namespace Super4.Infra.Repositories
                 foreach (var item in order.Items)
                 {
                     item.Order = order;
-                    order.TotalPrice += item.ProductPrice * item.TotalAmount;
-
-
-                    ////TOTAL AMOUNT NOT SUMMING
-                    /// ====>  order.Stock.Quantity = order.Stock.Quantity - item.TotalAmount;
-                    /// 
-
                     await CreateItemAsync(item);
                 }
             }
         }
+
+
+        // create updateStockAsync? 
+
 
         public async Task CreateItemAsync(OrderItem item)
         {

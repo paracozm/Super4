@@ -3,6 +3,6 @@
     public sealed class UpdateStockRequest
     {
         public string ProductId { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

@@ -10,6 +10,7 @@
         public Product Product { get; set; } //productId
         public OrderItem Item { get; set; } //orderItem
         public Stock Stock { get; set; } //stock
+        public List<Stock> Stocks { get; set; }
         public List<OrderItem> Items { get; set; }
     }
 }

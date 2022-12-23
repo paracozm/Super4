@@ -33,7 +33,7 @@ namespace Super4.Infra.Repositories
                 Id = product.Id,
                 ProductName = product.ProductName
             }, _dbConnector.dbTransaction);
-            
+
         }
 
         public async Task<List<Product>> GetAllAsync()

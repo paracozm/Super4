@@ -7,8 +7,8 @@ namespace Super4.Domain.Validations
     {
         public OrderValidation()
         {
-            RuleFor(x => x.Item).NotEmpty().WithMessage("Must add at least an item");
-            RuleFor(x => x.Customer.Id).NotEmpty().NotNull().WithMessage("Must link a customer");
+            RuleFor(x => x.Item).NotEmpty().WithMessage("Must add at least one item");
+            RuleFor(x => x.Customer.Id).NotEmpty().NotNull().WithMessage("Must add an customer");
         }
     }
 }

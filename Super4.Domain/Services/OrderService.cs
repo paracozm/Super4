@@ -32,10 +32,6 @@ namespace Super4.Domain.Services
                     }
                     return new Order();
                 }
-
-                var stockqty = order.Stock.Quantity;
-                var itemAmount = order.Item.TotalAmount;
-                order.Stock.Quantity = (stockqty - itemAmount);
                 */
 
 
@@ -43,8 +39,23 @@ namespace Super4.Domain.Services
                 order.Id = Guid.NewGuid().ToString("N");
                 order.OrderDate = DateTime.UtcNow;
 
+                foreach (var item in order.Items)
+                {
+                    order.TotalPrice = item.ProductPrice * item.TotalAmount;
+                }
 
 
+                /*
+                if (order.Stocks.Any())
+                {
+                    foreach (var stock in order.Stocks)
+                    {
+                        var sumStock = (stock.Quantity - stock.Item.TotalAmount);
+                        await _unitOfWork.StockRepository.UpdateAsync(stock);
+                    }
+                }
+
+                */
                 await _unitOfWork.OrderRepository.CreateAsync(order);
 
                 _unitOfWork.CommitTransaction();
