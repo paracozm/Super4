@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Super4.Application.Application;
-using Super4.Application.DataContract.Request.Customer;
 using Super4.Application.DataContract.Request.Order;
 using Super4.Application.Interfaces;
 

@@ -32,13 +32,32 @@ namespace Super4.Infra.Repositories
                 {
                     item.Order = order;
                     await CreateItemAsync(item);
+                    
                 }
             }
+            /*
+            if (order.Items.Any())
+            {
+                foreach (var stock in order.Stocks)
+                {
+                    stock.Order.Stock = stock;
+                    await UpdateStockAsync(stock);
+                }
+            }*/
         }
 
 
         // create updateStockAsync? 
+        public async Task UpdateStockAsync(Stock stock)
+        {
+            string sql = $@"update stock set Quantity = @Quantity where ProductId = @Id";
 
+            await _dbConnector.dbConnection.ExecuteAsync(sql, new
+            {
+                Id = stock.Product.Id,
+                Quantity = stock.Quantity
+            }, _dbConnector.dbTransaction);
+        }
 
         public async Task CreateItemAsync(OrderItem item)
         {

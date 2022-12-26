@@ -10,5 +10,6 @@ namespace Super4.Domain.Interfaces.Repositories
         Task<List<Order>> GetAllAsync();
         Task<List<OrderItem>> GetItemByOrderIdAsync(string orderId);
         Task<bool> ExistsById(string orderId);
+        Task UpdateStockAsync(Stock stock);
     }
 }

@@ -21,7 +21,7 @@ namespace Super4.Domain.Services
             try
             {
 
-                /*var validation = new OrderValidation();
+                var validation = new OrderValidation(); // TO DO
 
                 var result = validation.Validate(order);
                 if (!result.IsValid)
@@ -32,8 +32,6 @@ namespace Super4.Domain.Services
                     }
                     return new Order();
                 }
-                */
-
 
                 order.OrderNumber = Guid.NewGuid().ToString("N");
                 order.Id = Guid.NewGuid().ToString("N");
@@ -42,20 +40,12 @@ namespace Super4.Domain.Services
                 foreach (var item in order.Items)
                 {
                     order.TotalPrice = item.ProductPrice * item.TotalAmount;
+
+                    var stock = await _unitOfWork.StockRepository.GetByIdAsync(item.Product.Id);
+                    stock.Quantity -= item.TotalAmount;
+                    await _unitOfWork.StockRepository.UpdateAsync(stock); // NOT ROLLING BACK
                 }
 
-
-                /*
-                if (order.Stocks.Any())
-                {
-                    foreach (var stock in order.Stocks)
-                    {
-                        var sumStock = (stock.Quantity - stock.Item.TotalAmount);
-                        await _unitOfWork.StockRepository.UpdateAsync(stock);
-                    }
-                }
-
-                */
                 await _unitOfWork.OrderRepository.CreateAsync(order);
 
                 _unitOfWork.CommitTransaction();
