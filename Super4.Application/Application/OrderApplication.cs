@@ -20,8 +20,17 @@ namespace Super4.Application.Application
 
         public async Task<Order> CreateAsync(CreateOrderRequest order)
         {
-            var orderModel = _mapper.Map<Order>(order);
-            return await _orderService.CreateAsync(orderModel);
+            try
+            {
+                var orderModel = _mapper.Map<Order>(order);
+                return await _orderService.CreateAsync(orderModel);
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
         public async Task<List<OrderResponse>> GetAllAsync()

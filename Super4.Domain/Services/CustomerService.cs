@@ -17,12 +17,6 @@ namespace Super4.Domain.Services
         public async Task<Customer> CreateAsync(Customer customer)
         {
             var validation = new CustomerValidation();
-            var exists = await _unitOfWork.CustomerRepository.CPFExists(customer.Document.Replace(".", "").Replace("-", ""));
-            if (exists)
-            {
-                throw new ArgumentException($"CPF: {customer.Document.Replace(".", "").Replace("-", "")} is already registered!");
-            }
-
             var result = validation.Validate(customer);
             if (!result.IsValid)
             {
@@ -31,6 +25,12 @@ namespace Super4.Domain.Services
                     throw new ArgumentException("Property: " + error.PropertyName + " failed validation. Error was: " + error.ErrorMessage);
                 }
                 return new Customer();
+            }
+
+            var exists = await _unitOfWork.CustomerRepository.CPFExists(customer.Document.Replace(".", "").Replace("-", ""));
+            if (exists)
+            {
+                throw new ArgumentException($"CPF: {customer.Document.Replace(".", "").Replace("-", "")} is already registered!");
             }
 
             await ViaCepService.GetCepInfo(customer);

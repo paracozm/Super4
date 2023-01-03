@@ -9,6 +9,7 @@ namespace Super4.Domain.Validations
         {
             RuleFor(x => x.Quantity).NotNull().NotEmpty().WithMessage("Stock can't be null.");
             RuleFor(x => x.Product.Id).NotEmpty().NotNull().WithMessage("Must link a product ID to the stock.");
+            RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0).WithMessage("Quantity must be a positive value.");
         }
     }
 }
