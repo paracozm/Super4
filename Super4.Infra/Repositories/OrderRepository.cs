@@ -35,19 +35,10 @@ namespace Super4.Infra.Repositories
                     
                 }
             }
-            /*
-            if (order.Items.Any())
-            {
-                foreach (var stock in order.Stocks)
-                {
-                    stock.Order.Stock = stock;
-                    await UpdateStockAsync(stock);
-                }
-            }*/
         }
 
 
-        // create updateStockAsync? 
+        /*create updateStockAsync? 
         public async Task UpdateStockAsync(Stock stock)
         {
             string sql = $@"update stock set Quantity = @Quantity where ProductId = @Id";
@@ -57,7 +48,7 @@ namespace Super4.Infra.Repositories
                 Id = stock.Product.Id,
                 Quantity = stock.Quantity
             }, _dbConnector.dbTransaction);
-        }
+        }*/
 
         public async Task CreateItemAsync(OrderItem item)
         {
@@ -77,7 +68,8 @@ namespace Super4.Infra.Repositories
         {
             string sql = @"SELECT o.Id, o.ordernumber, o.orderdate, o.totalprice, c.Id
                             from [order] o
-                            join customer c on o.customerId = c.Id";
+                            join customer c on o.customerId = c.Id 
+                               WHERE o.Id = @Id";
             var order = await _dbConnector.dbConnection.QueryAsync<Order, Customer, Order>(
                 sql: sql,
                 map: (order, customer) =>
@@ -134,11 +126,11 @@ namespace Super4.Infra.Repositories
         public async Task<List<OrderItem>> GetItemByOrderIdAsync(string orderId)
         {
             string sql = $@"SELECT oi.orderId as Id, oi.productprice, oi.totalamount, o.Id, o.totalprice, p.Id, p.productname, s.productId as Id, s.quantity
-from orderitem oi
-join product p on oi.productid = p.Id
-join [order] o on oi.orderid = o.Id
-join stock s on oi.productid = s.productid
-where oi.orderid = @OrderId";
+                            from orderitem oi
+                            join product p on oi.productid = p.Id
+                            join [order] o on oi.orderid = o.Id
+                            join stock s on oi.productid = s.productid
+                            where oi.orderid = @OrderId";
 
             var items = await _dbConnector.dbConnection.QueryAsync<OrderItem, Order, Product, Stock, OrderItem>(
 

@@ -9,5 +9,6 @@ namespace Super4.Domain.Interfaces.Repositories
         Task<List<Customer>> GetAllAsync();
         Task<bool> ExistsById(int customerId);
         Task<bool> CPFExists(string cpf);
+        Task<Customer> GetIdByDocumentAsync(string document);
     }
 }

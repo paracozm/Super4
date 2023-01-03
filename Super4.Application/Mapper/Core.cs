@@ -49,6 +49,14 @@ namespace Super4.Application.Mapper
             CreateMap<CreateOrderItemRequest, OrderItem>()
                 .ForPath(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId));
 
+            //////
+            CreateMap<FillOrder, Order>()
+                .ForPath(dest => dest.Customer.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForPath(dest => dest.Customer.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForPath(dest => dest.Customer.Document, opt => opt.MapFrom(src => src.Document))
+                .ForPath(dest => dest.Customer.CEP, opt => opt.MapFrom(src => src.CEP))
+                .ForPath(dest => dest.Customer.AddressNumber, opt => opt.MapFrom(src => src.AddressNumber));
+            ///////
 
             CreateMap<Order, OrderResponse>()
                 .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items));

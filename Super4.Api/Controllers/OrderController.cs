@@ -44,7 +44,7 @@ namespace Super4.Api.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateOrderRequest request)
+        public async Task<ActionResult> Post([FromBody] FillOrder request)
         {
             try
             {

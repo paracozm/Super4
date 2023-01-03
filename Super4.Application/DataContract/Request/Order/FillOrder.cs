@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Super4.Application.DataContract.Request.Order
+﻿namespace Super4.Application.DataContract.Request.Order
 {
-    internal class FillOrder
+    public sealed class FillOrder
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Document { get; set; }
+        public string CEP { get; set; }
+        public string AddressNumber { get; set; }
+        public List<CreateOrderItemRequest> Items { get; set; }
     }
 }

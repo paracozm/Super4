@@ -12,5 +12,6 @@
         public Stock Stock { get; set; } //stock
         public List<Stock> Stocks { get; set; }
         public List<OrderItem> Items { get; set; }
+        public int CustomerId { get; set; }
     }
 }

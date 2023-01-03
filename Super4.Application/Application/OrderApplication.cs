@@ -18,7 +18,7 @@ namespace Super4.Application.Application
             _mapper = mapper;
         }
 
-        public async Task<Order> CreateAsync(CreateOrderRequest order)
+        public async Task<Order> CreateAsync(FillOrder order)
         {
             try
             {

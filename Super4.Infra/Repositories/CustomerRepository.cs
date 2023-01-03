@@ -63,6 +63,13 @@ namespace Super4.Infra.Repositories
 
             return customerCPF.FirstOrDefault();
         }
-        
+
+        public async Task<Customer> GetIdByDocumentAsync(string document)
+        {
+            string sql = $@"select Id from Customer where Document = @Document ";
+
+            var customer = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, new { Document = document }, _dbConnector.dbTransaction);
+            return customer.FirstOrDefault();
+        }
     }
 }

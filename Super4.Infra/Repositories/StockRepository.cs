@@ -70,7 +70,7 @@ namespace Super4.Infra.Repositories
                     splitOn : "Id",
                     transaction:_dbConnector.dbTransaction);
             
-                return product.First();
+                return product.FirstOrDefault();
 
             }
         }
