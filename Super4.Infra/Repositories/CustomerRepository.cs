@@ -69,7 +69,7 @@ namespace Super4.Infra.Repositories
             string sql = $@"select Id from Customer where Document = @Document ";
 
             var customer = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, new { Document = document }, _dbConnector.dbTransaction);
-            return customer.FirstOrDefault();
+            return customer.First();
         }
     }
 }

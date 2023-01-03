@@ -37,6 +37,7 @@ namespace Super4.Domain.Services
                 var newCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document);
                 order.Customer.Id = newCustomer.Id;
             }else{
+                await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
                 var existingCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
                 order.Customer.Id = existingCustomer.Id;
             }

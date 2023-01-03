@@ -60,9 +60,9 @@ namespace Super4.Application.Mapper
 
             CreateMap<Order, OrderResponse>()
                 .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
-                //.ForPath(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
-            
-            
+            //.ForPath(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
+
+
             CreateMap<OrderItem, OrderItemResponse>();
         }
     }
