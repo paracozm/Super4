@@ -31,19 +31,20 @@ namespace Super4.Domain.Services
 
             var getId = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
 
-            if (getId == null) 
+
+            if (getId == null)
             {
                 await _customerService.CreateAsync(order.Customer);
-                var newCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document);
+                var newCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
                 order.Customer.Id = newCustomer.Id;
-            }else{
-                await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
+            }
+            else
+            {
                 var existingCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
                 order.Customer.Id = existingCustomer.Id;
             }
 
             order.CustomerId = order.Customer.Id;
-
             /*var customerExist = await _unitOfWork.CustomerRepository.ExistsById(order.Customer.Id);
             if (!customerExist)
             {
@@ -77,7 +78,7 @@ namespace Super4.Domain.Services
                     }
 
                     var stock = await _unitOfWork.StockRepository.GetByIdAsync(item.Product.Id);
-                    
+
                     if (stock == null)
                     {
                         throw new ArgumentException($"ERROR: Stock {item.Product.Id} is 0");
@@ -86,10 +87,10 @@ namespace Super4.Domain.Services
                     {
                         throw new ArgumentException($"ERROR: Stock {item.Product.Id} is not enough, current stock is: {stock.Quantity += item.TotalAmount}");
                     }
-                    
+
                     stock.Quantity -= item.TotalAmount;
 
-                    await _unitOfWork.StockRepository.UpdateAsync(stock); 
+                    await _unitOfWork.StockRepository.UpdateAsync(stock);
                 }
 
                 await _unitOfWork.OrderRepository.CreateAsync(order);
@@ -118,6 +119,6 @@ namespace Super4.Domain.Services
             return response;
         }
 
-        
+
     }
 }
