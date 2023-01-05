@@ -6,11 +6,10 @@
         public string OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public Customer Customer { get; set; } //customerId
-        public Product Product { get; set; } //productId
-        public OrderItem Item { get; set; } //orderItem
-        public Stock Stock { get; set; } //stock
-        public List<Stock> Stocks { get; set; }
+        public Customer Customer { get; set; } 
+        public Product Product { get; set; } 
+        public OrderItem Item { get; set; } 
+        public Stock Stock { get; set; } 
         public List<OrderItem> Items { get; set; }
         public int CustomerId { get; set; }
     }

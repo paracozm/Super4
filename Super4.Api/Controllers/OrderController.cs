@@ -25,7 +25,6 @@ namespace Super4.Api.Controllers
             {
                 Message = "All orders returned.",
                 response
-
             });
         }
 
@@ -38,13 +37,12 @@ namespace Super4.Api.Controllers
             {
                 Message = "Order returned.",
                 response
-
             });
         }
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] FillOrder request)
+        public async Task<ActionResult> Post([FromBody] CreateOrderRequest request)
         {
             try
             {
@@ -53,7 +51,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Order created.",
                     request
-
                 });
             }
             catch (Exception ex)
@@ -61,6 +58,5 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
     }
 }

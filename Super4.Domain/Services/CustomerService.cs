@@ -26,15 +26,7 @@ namespace Super4.Domain.Services
                 }
                 return new Customer();
             }
-
-            /*
-            var cpfExists = await _unitOfWork.CustomerRepository.CPFExists(customer.Document.Replace(".", "").Replace("-", ""));
-            if (cpfExists)
-            {
-                throw new ArgumentException($"CPF: {customer.Document.Replace(".", "").Replace("-", "")} is already registered!");
-            }
-            */
-
+            
             await ViaCepService.GetCepInfo(customer);
             await CPFValidationService.CPFCheck(customer);
 

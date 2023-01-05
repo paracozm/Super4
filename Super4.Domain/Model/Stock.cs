@@ -4,8 +4,5 @@
     {
         public Product Product { get; set; }
         public int Quantity { get; set; }
-        public List<OrderItem> Items { get; set; }
-        public OrderItem Item { get; set; }
-        public Order Order { get; set; }
     }
 }

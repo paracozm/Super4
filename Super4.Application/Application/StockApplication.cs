@@ -44,7 +44,6 @@ namespace Super4.Application.Application
         public async Task<Stock> UpdateAsync(string id, UpdateStockRequest stock)
         {
             stock.ProductId = id;
-
             var stockModel = _mapper.Map<Stock>(stock);
             return await _stockService.UpdateAsync(stockModel);
         }

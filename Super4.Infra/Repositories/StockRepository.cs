@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.VisualBasic;
 using Super4.Domain.Interfaces.Repositories;
 using Super4.Domain.Interfaces.Repositories.DataConnector;
 using Super4.Domain.Model;
@@ -74,7 +73,5 @@ namespace Super4.Infra.Repositories
 
             }
         }
-
-
     }
 }

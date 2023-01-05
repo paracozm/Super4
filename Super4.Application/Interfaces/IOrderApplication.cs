@@ -6,7 +6,7 @@ namespace Super4.Application.Interfaces
 {
     public interface IOrderApplication
     {
-        Task<Order> CreateAsync(FillOrder order);
+        Task<Order> CreateAsync(CreateOrderRequest order);
         Task<List<OrderResponse>> GetAllAsync();
         Task<OrderResponse> GetByIdAsync(string id);
     }

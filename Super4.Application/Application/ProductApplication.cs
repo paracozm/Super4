@@ -28,7 +28,6 @@ namespace Super4.Application.Application
         {
             await _productService.GetByIdAsync(id);
             product.Id = id;
-            
             var productModel = _mapper.Map<Product>(product);
             return await _productService.UpdateAsync(productModel);
         }
@@ -46,7 +45,5 @@ namespace Super4.Application.Application
             var response = _mapper.Map<ProductResponse>(result);
             return response;
         }
-
-        
     }
 }

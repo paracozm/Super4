@@ -16,8 +16,8 @@ namespace Super4.Infra.Repositories
         public async Task CreateAsync(Customer customer)
         {
             string sql = @"Insert into customer
-                                (FirstName, LastName, Document, Street, AddressNumber, Neighborhood, City, Province, CEP)
-                                values (@FirstName, @LastName, @Document, @Street, @AddressNumber, @Neighborhood, @City, @Province, @CEP)";
+                            (FirstName, LastName, Document, Street, AddressNumber, Neighborhood, City, Province, CEP)
+                            values (@FirstName, @LastName, @Document, @Street, @AddressNumber, @Neighborhood, @City, @Province, @CEP)";
 
             await _dbConnector.dbConnection.ExecuteAsync(sql, new
             {
@@ -32,6 +32,7 @@ namespace Super4.Infra.Repositories
                 CEP = customer.CEP.Replace("-", "").Replace(".", "")
             }, _dbConnector.dbTransaction);
         }
+
         public async Task<List<Customer>> GetAllAsync()
         {
             string sql = @"select * from customer";
@@ -39,14 +40,15 @@ namespace Super4.Infra.Repositories
             var customers = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, _dbConnector.dbTransaction);
             return customers.ToList();
         }
+
         public async Task<Customer> GetByIdAsync(int customerId)
         {
             string sql = @"select * from customer where Id = @Id";
 
             var customer = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, new { Id = customerId }, _dbConnector.dbTransaction);
             return customer.First();
-
         }
+
         public async Task<bool> ExistsById(int customerId)
         {
             string sql = @"select 1 from customer where Id = @Id";
@@ -54,22 +56,15 @@ namespace Super4.Infra.Repositories
             var customer = await _dbConnector.dbConnection.QueryAsync<bool>(sql, new { Id = customerId }, _dbConnector.dbTransaction);
             return customer.FirstOrDefault();
         }
-        public async Task<bool> CPFExists(string cpf)
+
+        public async Task<int> GetLastId()
         {
-            string sql = @"select 1 from customer
-                                WHERE Document = @Document ";
+            string sql = "select IDENT_CURRENT('Customer')";
 
-            var customerCPF = await _dbConnector.dbConnection.QueryAsync<bool>(sql, new { Document = cpf }, _dbConnector.dbTransaction);
-
-            return customerCPF.FirstOrDefault();
+            var result = await _dbConnector.dbConnection.ExecuteScalarAsync(sql, _dbConnector.dbTransaction);
+            return Convert.ToInt32(result);
         }
 
-        public async Task<Customer> GetIdByDocumentAsync(string document)
-        {
-            string sql = $@"select Id from Customer where Document = @Document ";
 
-            var customer = await _dbConnector.dbConnection.QueryAsync<Customer>(sql, new { Document = document }, _dbConnector.dbTransaction);
-            return customer.FirstOrDefault();
-        }
     }
 }

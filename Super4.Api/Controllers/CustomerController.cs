@@ -24,7 +24,6 @@ namespace Super4.Api.Controllers
             {
                 Message = "All customers returned.",
                 response
-
             });
         }
 
@@ -38,16 +37,13 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Customer returned.",
                     response
-
                 });
             }
             catch (Exception ex)
             {
                 return UnprocessableEntity(ex.Message);
             }
-
         }
-
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateCustomerRequest request)
@@ -59,7 +55,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Customer created.",
                     request
-
                 });
             }
             catch(Exception ex)
@@ -67,15 +62,5 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
     }
 }
-
-
-/*var response = await _customerApplication.CreateAsync(request);
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(response);
-            }
-            return Ok(response);*/

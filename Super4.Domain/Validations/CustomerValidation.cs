@@ -23,6 +23,7 @@ namespace Super4.Domain.Validations
 
             RuleFor(x => x.AddressNumber).NotNull().NotEmpty().WithMessage("Address number can't be null or empty.");
             RuleFor(x => x.AddressNumber).Length(1, 6).WithMessage("Address number is too big. Maximum is 6 characters.");
+            RuleFor(x => x.AddressNumber).NotEqual("string").WithMessage("Address number can't be null or empty.");
         }
     }
 }

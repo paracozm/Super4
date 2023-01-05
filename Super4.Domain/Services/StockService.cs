@@ -52,10 +52,16 @@ namespace Super4.Domain.Services
                 return new Stock();
             }
 
-            var exists = await _unitOfWork.ProductRepository.ExistsById(stock.Product.Id);
-            if (!exists)
+            var productExists = await _unitOfWork.ProductRepository.ExistsById(stock.Product.Id);
+            if (!productExists)
             {
                 throw new Exception($"Error: Product Id {stock.Product.Id} does not exist.");
+            }
+
+            var stockExists = await _unitOfWork.StockRepository.GetByIdAsync(stock.Product.Id);
+            if (stockExists == null)
+            {
+                throw new Exception($"Error: Stock for Product Id: {stock.Product.Id} does not exist.");
             }
 
             await _unitOfWork.StockRepository.UpdateAsync(stock);

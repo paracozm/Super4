@@ -1,7 +1,6 @@
 ﻿using Super4.Domain.Interfaces.Repositories;
 using Super4.Domain.Interfaces.Services;
 using Super4.Domain.Model;
-using Super4.Domain.Validations;
 
 namespace Super4.Domain.Services
 {
@@ -18,38 +17,9 @@ namespace Super4.Domain.Services
 
         public async Task<Order> CreateAsync(Order order)
         {
-            var validation = new OrderValidation();
-            var result = validation.Validate(order);
-            if (!result.IsValid)
-            {
-                foreach (var error in result.Errors)
-                {
-                    throw new ArgumentException("Property: " + error.PropertyName + " failed validation. Error was: " + error.ErrorMessage);
-                }
-                return new Order();
-            }
-
-            var getId = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
-
-
-            if (getId == null)
-            {
-                await _customerService.CreateAsync(order.Customer);
-                var newCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
-                order.Customer.Id = newCustomer.Id;
-            }
-            else
-            {
-                var existingCustomer = await _unitOfWork.CustomerRepository.GetIdByDocumentAsync(order.Customer.Document.Replace("-", "").Replace(".", ""));
-                order.Customer.Id = existingCustomer.Id;
-            }
-
-            order.CustomerId = order.Customer.Id;
-            /*var customerExist = await _unitOfWork.CustomerRepository.ExistsById(order.Customer.Id);
-            if (!customerExist)
-            {
-                throw new ArgumentException($"ERROR: Customer {order.Customer.Id} doesn't exist");
-            }*/
+            await _customerService.CreateAsync(order.Customer);
+            var newId = await _unitOfWork.CustomerRepository.GetLastId();
+            order.Customer.Id = newId;
 
             _unitOfWork.BeginTransaction();
             try
@@ -83,17 +53,19 @@ namespace Super4.Domain.Services
                     {
                         throw new ArgumentException($"ERROR: Stock {item.Product.Id} is 0");
                     }
+
+                    stock.Quantity -= item.TotalAmount;
+                    
                     if (stock.Quantity < 0)
                     {
                         throw new ArgumentException($"ERROR: Stock {item.Product.Id} is not enough, current stock is: {stock.Quantity += item.TotalAmount}");
                     }
 
-                    stock.Quantity -= item.TotalAmount;
-
                     await _unitOfWork.StockRepository.UpdateAsync(stock);
                 }
 
                 await _unitOfWork.OrderRepository.CreateAsync(order);
+
                 _unitOfWork.CommitTransaction();
                 return new Order();
             }

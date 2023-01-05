@@ -12,6 +12,7 @@ namespace Super4.Infra.Repositories
         {
             _dbConnector = dbConnector;
         }
+
         public async Task CreateAsync(Order order)
         {
             string sql = $@"INSERT INTO [order] (Id, CustomerId, OrderNumber, OrderDate, TotalPrice) 
@@ -32,27 +33,13 @@ namespace Super4.Infra.Repositories
                 {
                     item.Order = order;
                     await CreateItemAsync(item);
-                    
                 }
             }
         }
 
-
-        /*create updateStockAsync? 
-        public async Task UpdateStockAsync(Stock stock)
-        {
-            string sql = $@"update stock set Quantity = @Quantity where ProductId = @Id";
-
-            await _dbConnector.dbConnection.ExecuteAsync(sql, new
-            {
-                Id = stock.Product.Id,
-                Quantity = stock.Quantity
-            }, _dbConnector.dbTransaction);
-        }*/
-
         public async Task CreateItemAsync(OrderItem item)
         {
-            string sql = @"insert into OrderItem (OrderId, ProductId, ProductPrice, TotalAmount)
+            string sql = @"INSERT INTO OrderItem (OrderId, ProductId, ProductPrice, TotalAmount)
                                 values (@OrderId, @ProductId, @ProductPrice, @TotalAmount)";
 
             await _dbConnector.dbConnection.ExecuteAsync(sql, new
@@ -82,7 +69,6 @@ namespace Super4.Infra.Repositories
                 transaction: _dbConnector.dbTransaction);
 
             return order.First();
-            
         }
 
         public async Task<List<Order>> GetAllAsync()
@@ -119,7 +105,6 @@ namespace Super4.Infra.Repositories
                 splitOn: "Id",
                 transaction: _dbConnector.dbTransaction);
 
-
             return orders.ToList();
         }
 
@@ -145,6 +130,7 @@ namespace Super4.Infra.Repositories
                 param: new { OrderId = orderId },
                 splitOn: "Id",
                 transaction: _dbConnector.dbTransaction);
+
             return items.ToList();
         }
 
@@ -156,7 +142,5 @@ namespace Super4.Infra.Repositories
 
             return order.FirstOrDefault();
         }
-
-        
     }
 }

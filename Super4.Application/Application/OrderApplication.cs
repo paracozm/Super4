@@ -18,19 +18,17 @@ namespace Super4.Application.Application
             _mapper = mapper;
         }
 
-        public async Task<Order> CreateAsync(FillOrder order)
+        public async Task<Order> CreateAsync(CreateOrderRequest order)
         {
             try
             {
                 var orderModel = _mapper.Map<Order>(order);
                 return await _orderService.CreateAsync(orderModel);
             }
-
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
         }
 
         public async Task<List<OrderResponse>> GetAllAsync()

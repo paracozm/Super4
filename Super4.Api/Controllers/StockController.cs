@@ -18,7 +18,6 @@ namespace Super4.Api.Controllers
             _stockApplication = stockApplication;
         }
 
-
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -27,10 +26,8 @@ namespace Super4.Api.Controllers
             {
                 Message = "All stock returned.",
                 response
-
             });
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(string id)
@@ -42,7 +39,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Stock returned.",
                     response
-
                 });
             }
             catch (Exception ex)
@@ -50,7 +46,6 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateStockRequest request)
@@ -62,7 +57,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Stock created.",
                     request
-
                 });
             }
             catch (Exception ex)
@@ -70,7 +64,6 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, UpdateStockRequest request)
@@ -82,7 +75,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Stock updated.",
                     request
-
                 });
             }
             catch (Exception ex)

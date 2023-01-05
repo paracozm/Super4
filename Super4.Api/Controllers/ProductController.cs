@@ -25,10 +25,8 @@ namespace Super4.Api.Controllers
             {
                 Message = "All products returned.",
                 response
-
             });
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(string id)
@@ -40,7 +38,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Product returned.",
                     response
-
                 });
             }
             catch (Exception ex)
@@ -59,7 +56,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Product created.",
                     request
-
                 });
             }
             catch (Exception ex)
@@ -78,7 +74,6 @@ namespace Super4.Api.Controllers
                 {
                     Message = "Product updated.",
                     request
-
                 });
             }
             catch (Exception ex)
@@ -86,7 +81,5 @@ namespace Super4.Api.Controllers
                 return UnprocessableEntity(ex.Message);
             }
         }
-
-        
     }
 }

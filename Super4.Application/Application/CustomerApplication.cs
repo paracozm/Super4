@@ -11,7 +11,6 @@ namespace Super4.Application.Application
     {
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
-
         public CustomerApplication(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
